@@ -1,0 +1,25 @@
+---
+- hosts: all
+  sudo: true
+  vars:
+    document_root: /var/www
+    UBUNTU_COMMON_ROOT_PASSWORD: 'securepassword'
+    UBUNTU_COMMON_DEPLOY_PASSWORD: 'deploypassword'
+    UBUNTU_COMMON_LOGWATCH_EMAIL: email@emailaddress.com
+    ubuntu_common_deploy_user_name: deploy
+    ubuntu_common_deploy_public_keys:
+      - ~/.ssh/id_rsa.pub
+
+    ubuntu_common_ssh_port: 22
+    ubuntu_common_http_port8080: 8080
+    ubuntu_common_http_port80: 80
+
+  pre_tasks:
+    - name: update apt cache
+      apt: update_cache=yes
+  roles:
+    - ntp
+    - security
+    - webserver
+    - database
+
